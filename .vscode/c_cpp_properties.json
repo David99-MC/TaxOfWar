@@ -1,0 +1,19 @@
+{
+    "configurations": [
+        {
+            "name": "TaxOfWarEditor Editor Win64 Development (TaxOfWar)",
+            "intelliSenseMode": "msvc-x64",
+            "compileCommands": "C:\\Epic Games\\Test\\TaxOfWar\\.vscode\\compileCommands_TaxOfWar.json",
+            "cStandard": "c17",
+            "cppStandard": "c++17"
+        },
+        {
+            "name": "Win32",
+            "intelliSenseMode": "msvc-x64",
+            "compileCommands": "C:\\Epic Games\\Test\\TaxOfWar\\.vscode\\compileCommands_Default.json",
+            "cStandard": "c17",
+            "cppStandard": "c++17"
+        }
+    ],
+    "version": 4
+}

@@ -1,0 +1,177 @@
+[
+	{
+		"file": "C:\\Epic Games\\Test\\TaxOfWar\\Source\\TaxOfWar\\AttributeComponent.cpp",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\Epic Games\\Test\\TaxOfWar\\.vscode\\compileCommands_TaxOfWar\\TaxOfWar.214.rsp\"",
+		"directory": "C:\\Epic Games\\Unreal Engine\\UE_5.0\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Epic Games\\Test\\TaxOfWar\\Source\\TaxOfWar\\AttributeComponent.h",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\Epic Games\\Test\\TaxOfWar\\.vscode\\compileCommands_TaxOfWar\\TaxOfWar.214.rsp\"",
+		"directory": "C:\\Epic Games\\Unreal Engine\\UE_5.0\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Epic Games\\Test\\TaxOfWar\\Source\\TaxOfWar\\Combatant.cpp",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\Epic Games\\Test\\TaxOfWar\\.vscode\\compileCommands_TaxOfWar\\TaxOfWar.214.rsp\"",
+		"directory": "C:\\Epic Games\\Unreal Engine\\UE_5.0\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Epic Games\\Test\\TaxOfWar\\Source\\TaxOfWar\\Combatant.h",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\Epic Games\\Test\\TaxOfWar\\.vscode\\compileCommands_TaxOfWar\\TaxOfWar.214.rsp\"",
+		"directory": "C:\\Epic Games\\Unreal Engine\\UE_5.0\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Epic Games\\Test\\TaxOfWar\\Source\\TaxOfWar\\EnemyAnimInstance.cpp",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\Epic Games\\Test\\TaxOfWar\\.vscode\\compileCommands_TaxOfWar\\TaxOfWar.214.rsp\"",
+		"directory": "C:\\Epic Games\\Unreal Engine\\UE_5.0\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Epic Games\\Test\\TaxOfWar\\Source\\TaxOfWar\\EnemyAnimInstance.h",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\Epic Games\\Test\\TaxOfWar\\.vscode\\compileCommands_TaxOfWar\\TaxOfWar.214.rsp\"",
+		"directory": "C:\\Epic Games\\Unreal Engine\\UE_5.0\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Epic Games\\Test\\TaxOfWar\\Source\\TaxOfWar\\EnemyBase.cpp",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\Epic Games\\Test\\TaxOfWar\\.vscode\\compileCommands_TaxOfWar\\TaxOfWar.214.rsp\"",
+		"directory": "C:\\Epic Games\\Unreal Engine\\UE_5.0\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Epic Games\\Test\\TaxOfWar\\Source\\TaxOfWar\\EnemyBase.h",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\Epic Games\\Test\\TaxOfWar\\.vscode\\compileCommands_TaxOfWar\\TaxOfWar.214.rsp\"",
+		"directory": "C:\\Epic Games\\Unreal Engine\\UE_5.0\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Epic Games\\Test\\TaxOfWar\\Source\\TaxOfWar\\EnemyBoss.cpp",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\Epic Games\\Test\\TaxOfWar\\.vscode\\compileCommands_TaxOfWar\\TaxOfWar.214.rsp\"",
+		"directory": "C:\\Epic Games\\Unreal Engine\\UE_5.0\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Epic Games\\Test\\TaxOfWar\\Source\\TaxOfWar\\EnemyBoss.h",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\Epic Games\\Test\\TaxOfWar\\.vscode\\compileCommands_TaxOfWar\\TaxOfWar.214.rsp\"",
+		"directory": "C:\\Epic Games\\Unreal Engine\\UE_5.0\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Epic Games\\Test\\TaxOfWar\\Source\\TaxOfWar\\HealthBar.cpp",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\Epic Games\\Test\\TaxOfWar\\.vscode\\compileCommands_TaxOfWar\\TaxOfWar.214.rsp\"",
+		"directory": "C:\\Epic Games\\Unreal Engine\\UE_5.0\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Epic Games\\Test\\TaxOfWar\\Source\\TaxOfWar\\HealthBar.h",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\Epic Games\\Test\\TaxOfWar\\.vscode\\compileCommands_TaxOfWar\\TaxOfWar.214.rsp\"",
+		"directory": "C:\\Epic Games\\Unreal Engine\\UE_5.0\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Epic Games\\Test\\TaxOfWar\\Source\\TaxOfWar\\HealthBarComponent.cpp",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\Epic Games\\Test\\TaxOfWar\\.vscode\\compileCommands_TaxOfWar\\TaxOfWar.214.rsp\"",
+		"directory": "C:\\Epic Games\\Unreal Engine\\UE_5.0\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Epic Games\\Test\\TaxOfWar\\Source\\TaxOfWar\\HealthBarComponent.h",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\Epic Games\\Test\\TaxOfWar\\.vscode\\compileCommands_TaxOfWar\\TaxOfWar.214.rsp\"",
+		"directory": "C:\\Epic Games\\Unreal Engine\\UE_5.0\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Epic Games\\Test\\TaxOfWar\\Source\\TaxOfWar\\Item.cpp",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\Epic Games\\Test\\TaxOfWar\\.vscode\\compileCommands_TaxOfWar\\TaxOfWar.214.rsp\"",
+		"directory": "C:\\Epic Games\\Unreal Engine\\UE_5.0\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Epic Games\\Test\\TaxOfWar\\Source\\TaxOfWar\\Item.h",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\Epic Games\\Test\\TaxOfWar\\.vscode\\compileCommands_TaxOfWar\\TaxOfWar.214.rsp\"",
+		"directory": "C:\\Epic Games\\Unreal Engine\\UE_5.0\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Epic Games\\Test\\TaxOfWar\\Source\\TaxOfWar\\MainHero.cpp",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\Epic Games\\Test\\TaxOfWar\\.vscode\\compileCommands_TaxOfWar\\TaxOfWar.214.rsp\"",
+		"directory": "C:\\Epic Games\\Unreal Engine\\UE_5.0\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Epic Games\\Test\\TaxOfWar\\Source\\TaxOfWar\\MainHero.h",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\Epic Games\\Test\\TaxOfWar\\.vscode\\compileCommands_TaxOfWar\\TaxOfWar.214.rsp\"",
+		"directory": "C:\\Epic Games\\Unreal Engine\\UE_5.0\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Epic Games\\Test\\TaxOfWar\\Source\\TaxOfWar\\MainHeroAnimInstance.cpp",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\Epic Games\\Test\\TaxOfWar\\.vscode\\compileCommands_TaxOfWar\\TaxOfWar.214.rsp\"",
+		"directory": "C:\\Epic Games\\Unreal Engine\\UE_5.0\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Epic Games\\Test\\TaxOfWar\\Source\\TaxOfWar\\MainHeroAnimInstance.h",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\Epic Games\\Test\\TaxOfWar\\.vscode\\compileCommands_TaxOfWar\\TaxOfWar.214.rsp\"",
+		"directory": "C:\\Epic Games\\Unreal Engine\\UE_5.0\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Epic Games\\Test\\TaxOfWar\\Source\\TaxOfWar\\MainHeroPlayerController.cpp",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\Epic Games\\Test\\TaxOfWar\\.vscode\\compileCommands_TaxOfWar\\TaxOfWar.214.rsp\"",
+		"directory": "C:\\Epic Games\\Unreal Engine\\UE_5.0\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Epic Games\\Test\\TaxOfWar\\Source\\TaxOfWar\\MainHeroPlayerController.h",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\Epic Games\\Test\\TaxOfWar\\.vscode\\compileCommands_TaxOfWar\\TaxOfWar.214.rsp\"",
+		"directory": "C:\\Epic Games\\Unreal Engine\\UE_5.0\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Epic Games\\Test\\TaxOfWar\\Source\\TaxOfWar\\Pickup.cpp",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\Epic Games\\Test\\TaxOfWar\\.vscode\\compileCommands_TaxOfWar\\TaxOfWar.214.rsp\"",
+		"directory": "C:\\Epic Games\\Unreal Engine\\UE_5.0\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Epic Games\\Test\\TaxOfWar\\Source\\TaxOfWar\\Pickup.h",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\Epic Games\\Test\\TaxOfWar\\.vscode\\compileCommands_TaxOfWar\\TaxOfWar.214.rsp\"",
+		"directory": "C:\\Epic Games\\Unreal Engine\\UE_5.0\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Epic Games\\Test\\TaxOfWar\\Source\\TaxOfWar\\Projectile.cpp",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\Epic Games\\Test\\TaxOfWar\\.vscode\\compileCommands_TaxOfWar\\TaxOfWar.214.rsp\"",
+		"directory": "C:\\Epic Games\\Unreal Engine\\UE_5.0\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Epic Games\\Test\\TaxOfWar\\Source\\TaxOfWar\\Projectile.h",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\Epic Games\\Test\\TaxOfWar\\.vscode\\compileCommands_TaxOfWar\\TaxOfWar.214.rsp\"",
+		"directory": "C:\\Epic Games\\Unreal Engine\\UE_5.0\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Epic Games\\Test\\TaxOfWar\\Source\\TaxOfWar\\TaxOfWar.Build.cs",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\Epic Games\\Test\\TaxOfWar\\.vscode\\compileCommands_TaxOfWar\\TaxOfWar.214.rsp\"",
+		"directory": "C:\\Epic Games\\Unreal Engine\\UE_5.0\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Epic Games\\Test\\TaxOfWar\\Source\\TaxOfWar\\TaxOfWar.cpp",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\Epic Games\\Test\\TaxOfWar\\.vscode\\compileCommands_TaxOfWar\\TaxOfWar.214.rsp\"",
+		"directory": "C:\\Epic Games\\Unreal Engine\\UE_5.0\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Epic Games\\Test\\TaxOfWar\\Source\\TaxOfWar\\TaxOfWar.h",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\Epic Games\\Test\\TaxOfWar\\.vscode\\compileCommands_TaxOfWar\\TaxOfWar.214.rsp\"",
+		"directory": "C:\\Epic Games\\Unreal Engine\\UE_5.0\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Epic Games\\Test\\TaxOfWar\\Source\\TaxOfWar\\TaxOfWarGameModeBase.cpp",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\Epic Games\\Test\\TaxOfWar\\.vscode\\compileCommands_TaxOfWar\\TaxOfWar.214.rsp\"",
+		"directory": "C:\\Epic Games\\Unreal Engine\\UE_5.0\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Epic Games\\Test\\TaxOfWar\\Source\\TaxOfWar\\TaxOfWarGameModeBase.h",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\Epic Games\\Test\\TaxOfWar\\.vscode\\compileCommands_TaxOfWar\\TaxOfWar.214.rsp\"",
+		"directory": "C:\\Epic Games\\Unreal Engine\\UE_5.0\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Epic Games\\Test\\TaxOfWar\\Source\\TaxOfWar\\TwoHandSword.cpp",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\Epic Games\\Test\\TaxOfWar\\.vscode\\compileCommands_TaxOfWar\\TaxOfWar.214.rsp\"",
+		"directory": "C:\\Epic Games\\Unreal Engine\\UE_5.0\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Epic Games\\Test\\TaxOfWar\\Source\\TaxOfWar\\TwoHandSword.h",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\Epic Games\\Test\\TaxOfWar\\.vscode\\compileCommands_TaxOfWar\\TaxOfWar.214.rsp\"",
+		"directory": "C:\\Epic Games\\Unreal Engine\\UE_5.0\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Epic Games\\Test\\TaxOfWar\\Source\\TaxOfWar\\Weapon.cpp",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\Epic Games\\Test\\TaxOfWar\\.vscode\\compileCommands_TaxOfWar\\TaxOfWar.214.rsp\"",
+		"directory": "C:\\Epic Games\\Unreal Engine\\UE_5.0\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Epic Games\\Test\\TaxOfWar\\Source\\TaxOfWar\\Weapon.h",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\Epic Games\\Test\\TaxOfWar\\.vscode\\compileCommands_TaxOfWar\\TaxOfWar.214.rsp\"",
+		"directory": "C:\\Epic Games\\Unreal Engine\\UE_5.0\\Engine\\Source"
+	}
+]
