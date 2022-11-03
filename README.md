@@ -32,9 +32,9 @@ This project's purpose is to get me used to Unreal Engine. I've learnt so much b
 6. Equipping Weapons such as TwoHandSword and Bow/Arrow and switching animations based on the weapon.
 
 7. Enemy Combat mechanics:
-  + Move towards the Player when they are close enough that is detected through a Sphere Collision and Attack when within attack range.
-  + Delay the Enemies attack using a timer delegate.
-  + Enemies can flexibly change between close range and ranged attacks, each type will play the correct animations.
+   + Move towards the Player when they are close enough that is detected through a Sphere Collision and Attack when within attack range.
+   + Delay the Enemies attack using a timer delegate.
+   + Enemies can flexibly change between close range and ranged attacks, each type will play the correct animations.
   
 8. UParticleSystem vs UParticleSystemComponent:
  + ParticleSystem: 
