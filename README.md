@@ -16,10 +16,10 @@ This project's purpose is to get me used to Unreal Engine. I've learnt so much b
     => Can be put in the CharacterMesh to enable animation.
     + Use AnimMontage to manage input actions:
     AnimMontage allows us to play a specific section in the AnimMontage when received an input:
-      a. Attack
-      b. Rolling
-      c. Get Hit
-      d. Die
+      + Attack
+      + Rolling
+      + Get Hit
+      + Die
     => All animations in one place, making it easier to make any upcoming changes.
     => Add any AnimNotify directly into the AnimMontage, which can be called and executed in the animation blueprint.
 
@@ -32,21 +32,21 @@ This project's purpose is to get me used to Unreal Engine. I've learnt so much b
 6. Equipping Weapons such as TwoHandSword and Bow/Arrow and switching animations based on the weapon.
 
 7. Enemy Combat mechanics:
-  a. Move towards the Player when they are close enough that is detected through a Sphere Collision and Attack when within attack range.
-  b. Delay the Enemies attack using a timer delegate.
-  c. Enemies can flexibly change between close range and ranged attacks, each type will play the correct animations.
+  + Move towards the Player when they are close enough that is detected through a Sphere Collision and Attack when within attack range.
+  + Delay the Enemies attack using a timer delegate.
+  + Enemies can flexibly change between close range and ranged attacks, each type will play the correct animations.
   
 8. UParticleSystem vs UParticleSystemComponent:
- a. ParticleSystem: 
-  -> Used for playing a short particle which is triggered through UGameplayStatics::SpawnEmitterAtLocation();
-  -> Usually triggered when getting hit, quick interactions, etc.
-  -> Doesn't need to be created through CreateDefaultSubobject<>() which then attached to the RootComponent.
- b. ParticleSystemComponent:
-  -> Used when need to play over longer period of time.
-  -> Has to be created through CreateDefaultSubobject<>() which then attached to the RootComponent (if need to play a consistent particle effects on an Actor).
-  -> Usually used for playing an effects within the map (i.e. falling leaves, snow drops).
-  -> Can be played as a consistent effect on an Actor (i.e. flame sword, flame armor)
+ + ParticleSystem: 
+  + Used for playing a short particle which is triggered through UGameplayStatics::SpawnEmitterAtLocation();
+  + Usually triggered when getting hit, quick interactions, etc.
+  + Doesn't need to be created through CreateDefaultSubobject<>() which then attached to the RootComponent.
+ + ParticleSystemComponent:
+  + Used when need to play over longer period of time.
+  + Has to be created through CreateDefaultSubobject<>() which then attached to the RootComponent (if need to play a consistent particle effects on an Actor).
+  + Usually used for playing an effects within the map (i.e. falling leaves, snow drops).
+  + Can be played as a consistent effect on an Actor (i.e. flame sword, flame armor)
 
 9. USoundBase vs USoundCue:
- a. USoundBase:
- b. USoundCue:
+ + USoundBase:
+ + USoundCue:
