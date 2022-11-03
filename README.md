@@ -38,14 +38,14 @@ This project's purpose is to get me used to Unreal Engine. I've learnt so much b
   
 8. UParticleSystem vs UParticleSystemComponent:
  + ParticleSystem: 
-  + Used for playing a short particle which is triggered through UGameplayStatics::SpawnEmitterAtLocation();
-  + Usually triggered when getting hit, quick interactions, etc.
-  + Doesn't need to be created through CreateDefaultSubobject<>() which then attached to the RootComponent.
+   + Used for playing a short particle which is triggered through UGameplayStatics::SpawnEmitterAtLocation();
+   + Usually triggered when getting hit, quick interactions, etc.
+   + Doesn't need to be created through CreateDefaultSubobject<>() which then attached to the RootComponent.
  + ParticleSystemComponent:
-  + Used when need to play over longer period of time.
-  + Has to be created through CreateDefaultSubobject<>() which then attached to the RootComponent (if need to play a consistent particle effects on an Actor).
-  + Usually used for playing an effects within the map (i.e. falling leaves, snow drops).
-  + Can be played as a consistent effect on an Actor (i.e. flame sword, flame armor)
+   + Used when need to play over longer period of time.
+   + Has to be created through CreateDefaultSubobject<>() which then attached to the RootComponent (if need to play a consistent particle effects on an Actor).
+   + Usually used for playing an effects within the map (i.e. falling leaves, snow drops).
+   + Can be played as a consistent effect on an Actor (i.e. flame sword, flame armor)
 
 9. USoundBase vs USoundCue:
  + USoundBase:
