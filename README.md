@@ -1,10 +1,18 @@
 # TaxOfWar
  Story/quest-driven RPG open-world 
+ 
+ Here's the file for a demo: https://drive.google.com/file/d/1-t4KFp8TH9yUsyTWNMvAoh94SvvlNd1R/view?usp=sharing
+ 
+ Steps to download the game:
+ + Download and unzip the TaxOfWar file
+ + Open Window file
+ + Double click on TaxOfWar.exe to open the game
+ + Enjoy!
 
 This project's purpose is to get me used to Unreal Engine. I've learnt so much by putting this project together, I will give a summary of what I learnt below:
 1. Utilze inheritance to:
-  a. share similar functionalities between the Player and the enemies.
-  b. share similar functionalities between the Items: Weapon, Pickup, and Hazardous elements (i.e. explosives).
+  +. share similar functionalities between the Player and the enemies.
+  +. share similar functionalities between the Items: Weapon, Pickup, and Hazardous elements (i.e. explosives).
   
 2. The animation blueprint: I spent a good amount of time playing around with animation blueprint in this project
   Setting up animations:
