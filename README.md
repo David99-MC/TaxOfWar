@@ -11,8 +11,8 @@
 
 This project's purpose is to get me used to Unreal Engine. I've learnt so much by putting this project together, I will give a summary of what I learnt below:
 1. Utilze inheritance to:
-  +. share similar functionalities between the Player and the enemies.
-  +. share similar functionalities between the Items: Weapon, Pickup, and Hazardous elements (i.e. explosives).
+  + share similar functionalities between the Player and the enemies.
+  + share similar functionalities between the Items: Weapon, Pickup, and Hazardous elements (i.e. explosives).
   
 2. The animation blueprint: I spent a good amount of time playing around with animation blueprint in this project
   Setting up animations:
