@@ -46,7 +46,3 @@ This project's purpose is to get me used to Unreal Engine. I've learnt so much b
    + Has to be created through CreateDefaultSubobject<>() which then attached to the RootComponent (if need to play a consistent particle effects on an Actor).
    + Usually used for playing an effects within the map (i.e. falling leaves, snow drops).
    + Can be played as a consistent effect on an Actor (i.e. flame sword, flame armor)
-
-9. USoundBase vs USoundCue:
- + USoundBase:
- + USoundCue:
