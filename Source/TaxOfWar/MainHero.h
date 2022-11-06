@@ -14,7 +14,7 @@ enum class EWeaponType : uint8
 {
 	EWT_BareHand 		UMETA(DisplayName = "Bare hand"),
 	EWT_TwoHandSword 	UMETA(DisplayName = "Two Hand Sword"),
-	EWT_Bow				UMETA(DisplayName = "Bow and Arrow"),
+	EWT_BowArrow		UMETA(DisplayName = "Bow and Arrow"),
 
 	EWT_MAX				UMETA(DisplayName = "DefaultMAX")
 

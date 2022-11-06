@@ -26,8 +26,8 @@ AEnemyBase::AEnemyBase()
     Weapon->SetupAttachment(GetMesh(), "Weapon_R");
     Weapon->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Overlap);
 
-    ProjectileSpawnLocation = CreateDefaultSubobject<USceneComponent>(TEXT("Spawn point"));
-    ProjectileSpawnLocation->SetupAttachment(Weapon);
+    ProjectileLocation = CreateDefaultSubobject<USceneComponent>(TEXT("Spawn point"));
+    ProjectileLocation->SetupAttachment(Weapon);
 
     CombatCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("Combat Collision"));
     CombatCollision->SetupAttachment(GetMesh(), FName("EnemySocket"));
@@ -93,6 +93,7 @@ void AEnemyBase::Tick(float DeltaTime)
 
 void AEnemyBase::TickStateMachine()
 {
+    DrawDebugSphere(GetWorld(), ProjectileLocation->GetComponentLocation(), 65, 20, FColor::Red);
     if (bIsAlive)
     {
         switch (ActiveState)
@@ -436,10 +437,11 @@ void AEnemyBase::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 
 void AEnemyBase::Fire() // Called in AnimNotify
 {
+    //FVector SpawnLocation = FVector(0, 0, ProjectileSpawnLocation->GetComponentLocation().Z);
     AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(
 		ProjectileClass,
-		ProjectileSpawnLocation->GetComponentLocation(),
-		ProjectileSpawnLocation->GetComponentRotation() );
+		ProjectileLocation->GetComponentLocation(),
+		ProjectileLocation->GetComponentRotation() );
 	    // projectileClass is a UClass object which is a blueprint based on C++ Projectile class
     if (Projectile == nullptr) return;
 	Projectile->SetOwner(this); // this is to set the owner of the projectile to the pawn that spawned it.

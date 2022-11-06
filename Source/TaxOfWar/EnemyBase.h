@@ -152,7 +152,7 @@ private: // Ranged Combat
 	void RangedAttack(bool bShouldRotate);
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	USceneComponent* ProjectileSpawnLocation;
+	USceneComponent* ProjectileLocation;
 
 	UPROPERTY(EditDefaultsOnly, category = "Combat")
 	TSubclassOf<class AProjectile> ProjectileClass; // this stores a UClass type object

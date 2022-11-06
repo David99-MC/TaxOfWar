@@ -5,7 +5,7 @@
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Particles/ParticleSystemComponent.h"
-#include "Components/SphereComponent.h"
+#include "Components/BoxComponent.h"
 #include "MainHero.h"
 #include "Sound/SoundCue.h"
 
@@ -15,10 +15,13 @@ AProjectile::AProjectile()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
 	ProjectileMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Projectile Mesh"));
-	RootComponent = ProjectileMesh;
+	ProjectileMesh->SetupAttachment(RootComponent);
 
-	HitBox = CreateDefaultSubobject<USphereComponent>(TEXT("Hit Box"));
-	HitBox->SetupAttachment(RootComponent);
+	SkeletalMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Skeletal Mesh"));
+    SkeletalMesh->SetupAttachment(RootComponent);
+
+	Hit_Box = CreateDefaultSubobject<UBoxComponent>(TEXT("Hit Box"));
+	Hit_Box->SetupAttachment(RootComponent);
 
 	ProjectileMovementComponent = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("Projectile Movement Component"));
 
@@ -34,9 +37,9 @@ void AProjectile::BeginPlay()
 	Target = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
 	
 	UGameplayStatics::PlaySoundAtLocation(this, LaunchSound, GetActorLocation());
-	HitBox->OnComponentBeginOverlap.AddDynamic(this, &AProjectile::HitBoxOnOverlapBegin);
-    HitBox->OnComponentEndOverlap.AddDynamic(this, &AProjectile::HitBoxOnOverlapEnd);
-	SetLifeSpan(5.f);
+	Hit_Box->OnComponentBeginOverlap.AddDynamic(this, &AProjectile::HitBoxOnOverlapBegin);
+    Hit_Box->OnComponentEndOverlap.AddDynamic(this, &AProjectile::HitBoxOnOverlapEnd);
+	SetLifeSpan(3.f);
 }
 
 // Called every frame
