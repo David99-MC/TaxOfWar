@@ -4,7 +4,6 @@
 #include "MainHero.h"
 
 #include "GameFramework/Actor.h"
-#include "MatineeCameraShake.h"
 #include "Components/SphereComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
@@ -19,6 +18,7 @@
 #include "TwoHandSword.h"
 #include "Sound/SoundCue.h"
 #include "AttributeComponent.h"
+#include "BowArrow.h"
 
 // Sets default values
 AMainHero::AMainHero()
@@ -128,29 +128,6 @@ void AMainHero::Tick(float DeltaTime)
     {
         AddMovementInput(-GetActorForwardVector(), StumblingSpeed * GetWorld()->GetDeltaSeconds());
     }
-    else if (Attacking && AttackDamaging)
-    {
-        // Start the CameraShake - uncomment if team wants
-        // GetWorld()->GetFirstPlayerController()->PlayerCameraManager->StartCameraShake(CameraShakeMinor);
-    }
-
-    // TODO: setup locked on target
-    // if (Target && TargetLocked) 
-    // {
-    //     FVector TargetDirection = Target->GetActorLocation() - GetActorLocation();
-
-    //     if (TargetDirection.Size2D() > CombatDistance)
-    //     {
-    //         // Get the rotation difference between the Player and the Enemy
-    //         // to smoothly rotate towards the Enemy
-    //         FRotator Difference = UKismetMathLibrary::NormalizedDeltaRotator(Controller->GetControlRotation(),
-    //                                                                         TargetDirection.ToOrientationRotator());
-    //         if (FMath::Abs(Difference.Yaw) > 30.f)
-    //         {
-    //             AddControllerYawInput(DeltaTime * -Difference.Yaw * 0.5f);
-    //         }
-    //     }
-    // }
 
     if (bInterpToEnemy && CombatTarget)
     {
@@ -332,6 +309,10 @@ float AMainHero::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent,
             AnimInstance->Montage_Play(TwoHandSwordMontage, 0.75f);
             AnimInstance->Montage_JumpToSection("GetHitTHS", TwoHandSwordMontage);
             break;
+        case EWeaponType::EWT_BowArrow:
+            AnimInstance->Montage_Play(BowArrowMontage, 0.75f);
+            AnimInstance->Montage_JumpToSection("GetHitBow", BowArrowMontage);
+            break;
         default:
             break;
         }
@@ -370,6 +351,10 @@ void AMainHero::Die()
         case EWeaponType::EWT_TwoHandSword:
             AnimInstance->Montage_Play(TwoHandSwordMontage, 0.75f);
             AnimInstance->Montage_JumpToSection("DieTHS", TwoHandSwordMontage);
+            break;
+        case EWeaponType::EWT_BowArrow:
+            AnimInstance->Montage_Play(BowArrowMontage, 0.75f);
+            AnimInstance->Montage_JumpToSection("DieBow", BowArrowMontage);
             break;
         default:
             break;
@@ -411,7 +396,7 @@ void AMainHero::Attack()
         {
             if (WeaponType == EWeaponType::EWT_TwoHandSword)
             {
-                AnimInstance->Montage_Play(TwoHandSwordMontage, 0.8f);
+                AnimInstance->Montage_Play(TwoHandSwordMontage, 0.6f);
                 switch (AttackIndex++)
                 {
                 case 0:
@@ -429,8 +414,27 @@ void AMainHero::Attack()
                 default:
                     break;
                 }
-                if (EquippedWeapon->SwingSound)
-                    UGameplayStatics::PlaySound2D(this, EquippedWeapon->SwingSound);
+            }
+            else if (WeaponType == EWeaponType::EWT_BowArrow)
+            {
+                AnimInstance->Montage_Play(BowArrowMontage, 0.8f);
+                switch (AttackIndex++)
+                {
+                case 0:
+                    AnimInstance->Montage_JumpToSection(FName("ComboBow1"), BowArrowMontage);
+                    break;
+                case 1:
+                    AnimInstance->Montage_JumpToSection(FName("ComboBow2"), BowArrowMontage);
+                    break;
+                case 2:
+                    AnimInstance->Montage_JumpToSection(FName("ComboBow3"), BowArrowMontage);
+                    break;
+                case 3:
+                    AnimInstance->Montage_JumpToSection(FName("ComboBow4"), BowArrowMontage);
+                    break;
+                default:
+                    break;
+                }
             }
             else // Bare hand
             {
@@ -444,16 +448,12 @@ void AMainHero::Attack()
                 case 1:
                     AnimInstance->Montage_JumpToSection(FName("ComboNW2"), BareHandMontage);
                     break;
-                // case 2:
-                //     AnimInstance->Montage_JumpToSection(FName("ComboNW3"), BareHandMontage);
-                //     break;
-                // case 3:
-                //     AnimInstance->Montage_JumpToSection(FName("ComboNW4"), BareHandMontage);
-                //     break;
                 default:
                     break;
                 }
             }
+            if (EquippedWeapon && EquippedWeapon->SwingSound)
+                UGameplayStatics::PlaySound2D(this, EquippedWeapon->SwingSound);
         }
     }
 }
@@ -523,6 +523,11 @@ void AMainHero::Roll()
             {
                 AnimInstance->Montage_Play(TwoHandSwordMontage);
                 AnimInstance->Montage_JumpToSection(FName("RollTHS"), TwoHandSwordMontage);
+            }
+            else if (WeaponType == EWeaponType::EWT_BowArrow)
+            {
+                AnimInstance->Montage_Play(BowArrowMontage);
+                AnimInstance->Montage_JumpToSection(FName("RollBow"), BowArrowMontage);
             }
             else
             {
@@ -608,4 +613,11 @@ void AMainHero::ShiftKeyUp()
 void AMainHero::ShiftKeyDown()
 {
     bShiftKeyDown = true;
+}
+
+void AMainHero::Fire()
+{
+    ABowArrow* Bow = Cast<ABowArrow>(EquippedWeapon);
+    if (Bow)
+        Bow->ShootArrow();
 }

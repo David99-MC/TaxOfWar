@@ -13,8 +13,8 @@ ABowArrow::ABowArrow()
     SkeletalMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Skeletal Mesh"));
     SkeletalMesh->SetupAttachment(RootComponent);
 
-    ProjectileLocation = CreateDefaultSubobject<USceneComponent>(TEXT("Spawn point"));
-    ProjectileLocation->SetupAttachment(SkeletalMesh);
+    SpawnLocation = CreateDefaultSubobject<USceneComponent>(TEXT("Spawn point"));
+    SpawnLocation->SetupAttachment(SkeletalMesh);
 }
 
 void ABowArrow::Equip(AMainHero* MainHero)
@@ -22,7 +22,7 @@ void ABowArrow::Equip(AMainHero* MainHero)
     if (MainHero)
     {
         Super::Equip(MainHero);
-        const USkeletalMeshSocket* RighHandSocket = MainHero->GetMesh()->GetSocketByName("Weapon_R");
+        const USkeletalMeshSocket* RighHandSocket = MainHero->GetMesh()->GetSocketByName("Weapon_L");
         if (RighHandSocket)
         {
             // Attach ME to the character (MainHero)
@@ -42,8 +42,8 @@ void ABowArrow::ShootArrow()
 {
     AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(
 		ProjectileClass,
-		ProjectileLocation->GetComponentLocation(),
-		ProjectileLocation->GetComponentRotation() );
+		SpawnLocation->GetComponentLocation(),
+		SpawnLocation->GetComponentRotation() );
 	    // projectileClass is a UClass object which is a blueprint based on C++ Projectile class
     if (Projectile == nullptr) return;
 	Projectile->SetOwner(GetOwner());

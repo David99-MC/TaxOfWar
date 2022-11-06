@@ -8,17 +8,19 @@
 #include "Components/BoxComponent.h"
 #include "MainHero.h"
 #include "Sound/SoundCue.h"
+#include "EnemyBase.h"
 
 // Sets default values
 AProjectile::AProjectile()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
-	ProjectileMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Projectile Mesh"));
-	ProjectileMesh->SetupAttachment(RootComponent);
+	// ProjectileMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Projectile Mesh"));
+	// ProjectileMesh->SetupAttachment(RootComponent);
 
-	SkeletalMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Skeletal Mesh"));
-    SkeletalMesh->SetupAttachment(RootComponent);
+	BowSkeletalMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Skeletal Mesh"));
+    BowSkeletalMesh->SetupAttachment(RootComponent);
+	RootComponent = BowSkeletalMesh;
 
 	Hit_Box = CreateDefaultSubobject<UBoxComponent>(TEXT("Hit Box"));
 	Hit_Box->SetupAttachment(RootComponent);
@@ -58,21 +60,35 @@ void AProjectile::HitBoxOnOverlapBegin(UPrimitiveComponent* OverlappedComponent,
 	}
 	AController* MyOwnerInstigator = MyOwner->GetInstigatorController();
 
-	if (HitParticle && HitMuzzle)
+	// if OtherActor is not this particular projectile and its owner
+	if (Cast<AEnemyBase>(GetOwner())) // Spawned by Enemies
+	{
+		AMainHero* MainHero = Cast<AMainHero>(OtherActor);
+		if (MainHero && OtherActor != this && OtherActor != MyOwner)  
+		{
+			UGameplayStatics::ApplyDamage(MainHero, ProjectileDamage, MyOwnerInstigator, this, UDamageType::StaticClass());
+			if (MainHero->GetHitSound)
+				UGameplayStatics::PlaySound2D(this, MainHero->GetHitSound, 0.5f);
+		}
+	}	
+	else // Spawned by Player
+	{
+		AEnemyBase* Enemy = Cast<AEnemyBase>(OtherActor);
+		if (Enemy && OtherActor != this && OtherActor != MyOwner)  
+		{
+			UGameplayStatics::ApplyDamage(Enemy, ProjectileDamage, MyOwnerInstigator, this, UDamageType::StaticClass());
+			if (Enemy->GetHitSound)
+				UGameplayStatics::PlaySound2D(this, Enemy->GetHitSound, 0.5f);
+		}
+	}
+	if (HitParticle && HitMuzzle) // Play effects
 	{
 		UGameplayStatics::SpawnEmitterAtLocation(this, HitParticle, GetActorLocation(), GetActorRotation());
 		UGameplayStatics::SpawnEmitterAtLocation(this, HitMuzzle, GetActorLocation(), GetActorRotation());
 		if (HitSound)
 			UGameplayStatics::PlaySoundAtLocation(this, HitSound, GetActorLocation());
 	}
-	// if OtherActor is not this particular projectile and its owner
-	AMainHero* MainHero = Cast<AMainHero>(OtherActor);
-	if (MainHero && OtherActor != this && OtherActor != MyOwner)  
-	{
-		UGameplayStatics::ApplyDamage(OtherActor, ProjectileDamage, MyOwnerInstigator, this, UDamageType::StaticClass());
-		if (MainHero->GetHitSound)
-			UGameplayStatics::PlaySound2D(this, MainHero->GetHitSound, 0.5f);
-	}	
+
 	Destroy();
 }
 

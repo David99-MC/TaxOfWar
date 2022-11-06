@@ -232,6 +232,9 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	TSubclassOf<AEnemyBase> EnemyFilter;
 
+	UFUNCTION(BlueprintCallable)
+	void Fire();
+
 public: // Effects
 	UPROPERTY(EditAnywhere, Category = "Effects | VFX")
 	class UParticleSystem* GetHitParticles;

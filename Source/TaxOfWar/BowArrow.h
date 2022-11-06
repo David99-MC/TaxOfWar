@@ -26,7 +26,7 @@ private:
 	class USkeletalMeshComponent* SkeletalMesh;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	USceneComponent* ProjectileLocation;
+	USceneComponent* SpawnLocation;
 
 	UPROPERTY(EditDefaultsOnly, category = "Combat")
 	TSubclassOf<class AProjectile> ProjectileClass;
