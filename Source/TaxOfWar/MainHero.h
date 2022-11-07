@@ -65,8 +65,6 @@ public: // Stamina involved section
 	float MaxStamina;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player Stats")
 	float Stamina;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player Stats")
-	float RollStamina;
 
 	float SprintingDrainRate;
 	float StaminaRegenRate;
@@ -82,7 +80,13 @@ public: // Stamina involved section
 	void Sprinting(float DeltaSecond);
 
 	UFUNCTION(BlueprintCallable)
-	void TakeStamina();
+	void TakeStamina(float Amount);
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player Stats")
+	float RollStamina;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player Stats")
+	float AttackStamina;
 
 protected:
 	// Called when the game starts or when spawned
@@ -139,10 +143,10 @@ public:
 	UAnimMontage* TwoHandSwordMontage;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Anims")
-	UAnimMontage* BowArrowMontage;
+	UAnimMontage* SpearMontage;
 
-	UPROPERTY(EditAnywhere, Category = Camera)
-	TSubclassOf<class UMatineeCameraShake> CameraShakeMinor;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Anims")
+	UAnimMontage* BowArrowMontage;
 
 	bool Rolling;
 	FRotator RollRotation;
@@ -170,6 +174,9 @@ protected:
 
 	UFUNCTION(BlueprintCallable, Category = "Combat")
 	void EndRoll();
+
+	UFUNCTION(BlueprintCallable)
+	bool GetRolling();
 
 	void RollRotateSmooth();
 	void FocusTarget();

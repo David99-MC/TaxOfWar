@@ -22,7 +22,6 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Combat")
 	class UBoxComponent* HitBox;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat")
 	float WeaponDamage;
 	FORCEINLINE void SetWeaponDamage(float Damage) { WeaponDamage = Damage; }
 	

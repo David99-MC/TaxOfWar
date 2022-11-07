@@ -302,15 +302,19 @@ float AMainHero::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent,
         switch (WeaponType)
         {
         case EWeaponType::EWT_BareHand:
-            AnimInstance->Montage_Play(BareHandMontage, 0.75f);
+            AnimInstance->Montage_Play(BareHandMontage);
             AnimInstance->Montage_JumpToSection("GetHitNW", BareHandMontage);
             break;
         case EWeaponType::EWT_TwoHandSword:
-            AnimInstance->Montage_Play(TwoHandSwordMontage, 0.75f);
+            AnimInstance->Montage_Play(TwoHandSwordMontage);
             AnimInstance->Montage_JumpToSection("GetHitTHS", TwoHandSwordMontage);
             break;
+        case EWeaponType::EWT_Spear:
+            AnimInstance->Montage_Play(SpearMontage);
+            AnimInstance->Montage_JumpToSection("GetHitSpear", SpearMontage);
+            break;
         case EWeaponType::EWT_BowArrow:
-            AnimInstance->Montage_Play(BowArrowMontage, 0.75f);
+            AnimInstance->Montage_Play(BowArrowMontage);
             AnimInstance->Montage_JumpToSection("GetHitBow", BowArrowMontage);
             break;
         default:
@@ -352,6 +356,10 @@ void AMainHero::Die()
             AnimInstance->Montage_Play(TwoHandSwordMontage, 0.75f);
             AnimInstance->Montage_JumpToSection("DieTHS", TwoHandSwordMontage);
             break;
+        case EWeaponType::EWT_Spear:
+            AnimInstance->Montage_Play(SpearMontage, 0.75f);
+            AnimInstance->Montage_JumpToSection("DieSpear", SpearMontage);
+            break;
         case EWeaponType::EWT_BowArrow:
             AnimInstance->Montage_Play(BowArrowMontage, 0.75f);
             AnimInstance->Montage_JumpToSection("DieBow", BowArrowMontage);
@@ -386,6 +394,7 @@ void AMainHero::Attack()
     if ((!Attacking || NextAttackReady) && !Rolling && !Stumbling && !GetCharacterMovement()->IsFalling())
     {
         Super::Attack();
+        if (Stamina < AttackStamina) return;
         SetInterpToEnemy(true);
         
         if (AttackIndex >= 4)
@@ -417,7 +426,7 @@ void AMainHero::Attack()
             }
             else if (WeaponType == EWeaponType::EWT_BowArrow)
             {
-                AnimInstance->Montage_Play(BowArrowMontage, 0.8f);
+                AnimInstance->Montage_Play(BowArrowMontage);
                 switch (AttackIndex++)
                 {
                 case 0:
@@ -436,9 +445,30 @@ void AMainHero::Attack()
                     break;
                 }
             }
+            else if (WeaponType == EWeaponType::EWT_Spear)
+            {
+                AnimInstance->Montage_Play(SpearMontage);
+                switch (AttackIndex++)
+                {
+                case 0:
+                    AnimInstance->Montage_JumpToSection(FName("ComboSpear1"), SpearMontage);
+                    break;
+                case 1:
+                    AnimInstance->Montage_JumpToSection(FName("ComboSpear2"), SpearMontage);
+                    break;
+                case 2:
+                    AnimInstance->Montage_JumpToSection(FName("ComboSpear3"), SpearMontage);
+                    break;
+                case 3:
+                    AnimInstance->Montage_JumpToSection(FName("ComboSpear4"), SpearMontage);
+                    break;
+                default:
+                    break;
+                }
+            }
             else // Bare hand
             {
-                AnimInstance->Montage_Play(BareHandMontage, 1.3f);
+                AnimInstance->Montage_Play(BareHandMontage, 2.f);
                 int RanInt = FMath::RandRange(0, 1);
                 switch (RanInt)
                 {
@@ -512,27 +542,31 @@ void AMainHero::Roll()
         else
             RollRotation = GetActorRotation();
 
-        //FRotator SmoothedRollRotation = FMath::Lerp(GetActorRotation(), RollRotation, RotationSmoothingRate * GetWorld()->DeltaTimeSeconds);
-
         SetActorRotation(RollRotation);
 
         // Play different AnimMontage based on weapon
         if (AnimInstance)
         {
-            if (WeaponType == EWeaponType::EWT_TwoHandSword)
+            switch (WeaponType)
             {
+            case EWeaponType::EWT_TwoHandSword:
                 AnimInstance->Montage_Play(TwoHandSwordMontage);
                 AnimInstance->Montage_JumpToSection(FName("RollTHS"), TwoHandSwordMontage);
-            }
-            else if (WeaponType == EWeaponType::EWT_BowArrow)
-            {
+                break;
+            case EWeaponType::EWT_Spear:
+                AnimInstance->Montage_Play(SpearMontage);
+                AnimInstance->Montage_JumpToSection(FName("RollSpear"), SpearMontage);
+                break;
+            case EWeaponType::EWT_BowArrow:
                 AnimInstance->Montage_Play(BowArrowMontage);
                 AnimInstance->Montage_JumpToSection(FName("RollBow"), BowArrowMontage);
-            }
-            else
-            {
+                break;
+            case EWeaponType::EWT_BareHand:
                 AnimInstance->Montage_Play(BareHandMontage);
                 AnimInstance->Montage_JumpToSection(FName("RollNW"), BareHandMontage);
+                break;
+            default:
+                break;
             }
         }
     }
@@ -596,13 +630,18 @@ void AMainHero::SetMovementStatus(EMovementStatus Status)
 	}
 }
 
-void AMainHero::TakeStamina()
+void AMainHero::TakeStamina(float Amount)
 {
-    Stamina -= RollStamina;
+    Stamina -= Amount;
     if (Stamina <= MinSprintStamina)
         SetStaminaStatus(EStaminaStatus::ESS_BelowMinimum);
     else if(Stamina <= 0)
         SetStaminaStatus(EStaminaStatus::ESS_ExhaustedRecovery);
+}
+
+bool AMainHero::GetRolling()
+{
+    return Rolling;
 }
 
 void AMainHero::ShiftKeyUp()
@@ -620,4 +659,5 @@ void AMainHero::Fire()
     ABowArrow* Bow = Cast<ABowArrow>(EquippedWeapon);
     if (Bow)
         Bow->ShootArrow();
+    
 }

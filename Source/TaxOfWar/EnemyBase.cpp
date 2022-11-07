@@ -26,8 +26,8 @@ AEnemyBase::AEnemyBase()
     Weapon->SetupAttachment(GetMesh(), "Weapon_R");
     Weapon->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Overlap);
 
-    ProjectileLocation = CreateDefaultSubobject<USceneComponent>(TEXT("Spawn point"));
-    ProjectileLocation->SetupAttachment(Weapon);
+    ProjectileSpawnLocation = CreateDefaultSubobject<USceneComponent>(TEXT("Spawn point"));
+    ProjectileSpawnLocation->SetupAttachment(Weapon);
 
     CombatCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("Combat Collision"));
     CombatCollision->SetupAttachment(GetMesh(), FName("EnemySocket"));
@@ -93,7 +93,6 @@ void AEnemyBase::Tick(float DeltaTime)
 
 void AEnemyBase::TickStateMachine()
 {
-    DrawDebugSphere(GetWorld(), ProjectileLocation->GetComponentLocation(), 65, 20, FColor::Red);
     if (bIsAlive)
     {
         switch (ActiveState)
@@ -194,19 +193,17 @@ void AEnemyBase::Attack()
         
         if (bShouldRotateTowardsTarget)
         {
-            FVector Direction = Target->GetActorLocation() - GetActorLocation();
-            FVector RotationOffSet = Target->GetActorForwardVector() * 50.f;
-            FVector AnticipationDirection = Direction + RotationOffSet;
-            FRotator Rotation = FRotationMatrix::MakeFromX(AnticipationDirection).Rotator();
-            FRotator OnlyYawRotation = FRotator(0,Rotation.Yaw,0);
-            SetActorRotation(OnlyYawRotation); 
+            FVector TargetDirection = Target->GetActorLocation() - GetActorLocation();
+            FVector TargetDirection2D = FVector(TargetDirection.X, TargetDirection.Y, 0);
+            FRotator Rotation = FRotationMatrix::MakeFromX(TargetDirection2D).Rotator();
+            SetActorRotation(Rotation); 
         }
         
         if (SwingSound)
             UGameplayStatics::PlaySound2D(this, SwingSound);
 
         int RandomIndex = FMath::RandRange(0, AttackAnimations.Num() - 1);
-        PlayAnimMontage(AttackAnimations[RandomIndex], 0.80f);
+        PlayAnimMontage(AttackAnimations[RandomIndex]);
     }
 }
 
@@ -232,7 +229,7 @@ void AEnemyBase::RangedAttack(bool bShouldRotate)
         }
         
         int RandomIndex = FMath::RandRange(0, RangedAttackAnimations.Num() - 1);
-        PlayAnimMontage(RangedAttackAnimations[RandomIndex], 0.7f);
+        PlayAnimMontage(RangedAttackAnimations[RandomIndex], 0.8f);
     }
 }
 
@@ -440,8 +437,8 @@ void AEnemyBase::Fire() // Called in AnimNotify
     //FVector SpawnLocation = FVector(0, 0, ProjectileSpawnLocation->GetComponentLocation().Z);
     AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(
 		ProjectileClass,
-		ProjectileLocation->GetComponentLocation(),
-		ProjectileLocation->GetComponentRotation() );
+		ProjectileSpawnLocation->GetComponentLocation(),
+		ProjectileSpawnLocation->GetComponentRotation() );
 	    // projectileClass is a UClass object which is a blueprint based on C++ Projectile class
     if (Projectile == nullptr) return;
 	Projectile->SetOwner(this); // this is to set the owner of the projectile to the pawn that spawned it.
