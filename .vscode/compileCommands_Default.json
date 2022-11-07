@@ -140,6 +140,16 @@
 		"directory": "C:\\Epic Games\\Unreal Engine\\UE_5.0\\Engine\\Source"
 	},
 	{
+		"file": "C:\\Epic Games\\Test\\TaxOfWar\\Source\\TaxOfWar\\Spear.cpp",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\Epic Games\\Test\\TaxOfWar\\.vscode\\compileCommands_Default\\TaxOfWar.214.rsp\"",
+		"directory": "C:\\Epic Games\\Unreal Engine\\UE_5.0\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Epic Games\\Test\\TaxOfWar\\Source\\TaxOfWar\\Spear.h",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\Epic Games\\Test\\TaxOfWar\\.vscode\\compileCommands_Default\\TaxOfWar.214.rsp\"",
+		"directory": "C:\\Epic Games\\Unreal Engine\\UE_5.0\\Engine\\Source"
+	},
+	{
 		"file": "C:\\Epic Games\\Test\\TaxOfWar\\Source\\TaxOfWar\\TaxOfWar.Build.cs",
 		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\Epic Games\\Test\\TaxOfWar\\.vscode\\compileCommands_Default\\TaxOfWar.214.rsp\"",
 		"directory": "C:\\Epic Games\\Unreal Engine\\UE_5.0\\Engine\\Source"

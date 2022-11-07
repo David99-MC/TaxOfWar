@@ -60,8 +60,16 @@ void AProjectile::HitBoxOnOverlapBegin(UPrimitiveComponent* OverlappedComponent,
 	}
 	AController* MyOwnerInstigator = MyOwner->GetInstigatorController();
 
+	if (HitParticle && HitMuzzle) // Play effects
+	{
+		UGameplayStatics::SpawnEmitterAtLocation(this, HitParticle, GetActorLocation(), GetActorRotation());
+		UGameplayStatics::SpawnEmitterAtLocation(this, HitMuzzle, GetActorLocation(), GetActorRotation());
+		if (HitSound)
+			UGameplayStatics::PlaySoundAtLocation(this, HitSound, GetActorLocation());
+	}
+
 	// if OtherActor is not this particular projectile and its owner
-	if (Cast<AEnemyBase>(GetOwner())) // Spawned by Enemies
+	if (Cast<AEnemyBase>(MyOwner)) // Spawned by Enemies
 	{
 		AMainHero* MainHero = Cast<AMainHero>(OtherActor);
 		if (MainHero && OtherActor != this && OtherActor != MyOwner)  
@@ -80,13 +88,6 @@ void AProjectile::HitBoxOnOverlapBegin(UPrimitiveComponent* OverlappedComponent,
 			if (Enemy->GetHitSound)
 				UGameplayStatics::PlaySound2D(this, Enemy->GetHitSound, 0.5f);
 		}
-	}
-	if (HitParticle && HitMuzzle) // Play effects
-	{
-		UGameplayStatics::SpawnEmitterAtLocation(this, HitParticle, GetActorLocation(), GetActorRotation());
-		UGameplayStatics::SpawnEmitterAtLocation(this, HitMuzzle, GetActorLocation(), GetActorRotation());
-		if (HitSound)
-			UGameplayStatics::PlaySoundAtLocation(this, HitSound, GetActorLocation());
 	}
 
 	Destroy();
