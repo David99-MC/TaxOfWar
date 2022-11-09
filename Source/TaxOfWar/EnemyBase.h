@@ -32,9 +32,6 @@ public: // Combat
 	UStaticMeshComponent* Weapon;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat")
-	float CloseAttackRange;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat")
 	float JumpOffset;
 
 	UPROPERTY(EditAnywhere, Category = "Combat")
@@ -86,8 +83,18 @@ public: // Combat
 	FTimerHandle AttackTimer;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat")
+	float CloseAttackRange;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat")
 	float Attack_Cooldown;
 	float Attack_Timestamp;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat")
+	float FarAttackRange;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat")
+	float Long_Attack_Cooldown;
+	float Long_Attack_Timestamp;
 
 protected:
 
@@ -179,10 +186,13 @@ private: // Ranged Combat
 	TSet<FVector> EnemySpawningLocations;
 
 private:
+
 	int QuickHitsTaken;
 	float QuickHitsTimestamp;
+
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	float HitThreshold;
+
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	bool bIsBoss;
 

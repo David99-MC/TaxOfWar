@@ -83,6 +83,7 @@ void AEnemyBase::BeginPlay()
     HealthBarWidget->SetHealthPercent(Attributes->GetHealth() / Attributes->GetMaxHealth());
 
     Attack_Timestamp = -Attack_Cooldown;
+    Long_Attack_Timestamp = -Long_Attack_Cooldown;
 }
 
 void AEnemyBase::Tick(float DeltaTime)
@@ -95,6 +96,8 @@ void AEnemyBase::TickStateMachine()
 {
     if (bIsAlive)
     {
+        DrawDebugSphere(GetWorld(), GetActorLocation(), CloseAttackRange, 20, FColor::Red);
+        DrawDebugSphere(GetWorld(), GetActorLocation(), FarAttackRange, 20, FColor::Blue);
         switch (ActiveState)
         {
             case State::IDLE:
@@ -139,7 +142,11 @@ void AEnemyBase::StateChaseClose()
     float Distance = FVector::Distance(Target->GetActorLocation(), GetActorLocation());
     if (Distance <= CloseAttackRange) // Get in range
     {
-        GetWorldTimerManager().SetTimer(TeleportTimer, this, &AEnemyBase::Teleport, TeleportDelay);
+        if (bIsBoss)
+        {
+            GetWorldTimerManager().SetTimer(TeleportTimer, this, &AEnemyBase::Teleport, TeleportDelay);
+        }
+
         bHasValidTarget = true;
         // Use DotProduct to hit the player in the correct direction
         FVector TargetDirection = Target->GetActorLocation() - GetActorLocation();
@@ -161,19 +168,21 @@ void AEnemyBase::StateChaseClose()
             return;
         }
     }
-    else // Out of CloseAttackRange
+    else if (Distance > CloseAttackRange && Distance <= FarAttackRange) // Out of CloseAttackRange
+    {
+        bHasValidTarget = true;
+        
+        if (UGameplayStatics::GetTimeSeconds(GetWorld()) >= (Long_Attack_Timestamp + Long_Attack_Cooldown) && AIController->LineOfSightTo(Target))
+        {
+            Long_Attack_Timestamp = UGameplayStatics::GetTimeSeconds(GetWorld());
+            RangedAttack(true);
+            return;
+        }
+    }
+    else
     {
         if (bIsBoss)
-        {
-            bHasValidTarget = true;
             GetWorldTimerManager().ClearTimer(TeleportTimer);
-            if (UGameplayStatics::GetTimeSeconds(GetWorld()) >= (Attack_Timestamp + Attack_Cooldown) && AIController->LineOfSightTo(Target))
-            {
-                Attack_Timestamp = UGameplayStatics::GetTimeSeconds(GetWorld());
-                RangedAttack(true);
-                return;
-            }
-        }
     }
 
     if (AIController && !AIController->IsFollowingAPath())
