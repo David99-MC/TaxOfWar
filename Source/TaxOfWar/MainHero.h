@@ -148,6 +148,9 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Anims")
 	UAnimMontage* BowArrowMontage;
 
+	float AttackSpeed;
+	FORCEINLINE void SetAttackSpeed(float Amount) { AttackSpeed = Amount; }
+
 	bool Rolling;
 	FRotator RollRotation;
 

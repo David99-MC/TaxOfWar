@@ -19,7 +19,7 @@ void ASpear::Equip(AMainHero* MainHero)
             RighHandSocket->AttachActor(this, MainHero->GetMesh());
             MainHero->SetWeaponType(EWeaponType::EWT_Spear);
             SetWeaponDamage(SpearDamge);
-            
+            MainHero->SetAttackSpeed(Spear_AttackSpeed);
             if (EquipSound)
             {
                 UGameplayStatics::PlaySound2D(this, EquipSound);

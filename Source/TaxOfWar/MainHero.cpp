@@ -405,7 +405,7 @@ void AMainHero::Attack()
         {
             if (WeaponType == EWeaponType::EWT_TwoHandSword)
             {
-                AnimInstance->Montage_Play(TwoHandSwordMontage, 0.6f);
+                AnimInstance->Montage_Play(TwoHandSwordMontage, AttackSpeed);
                 switch (AttackIndex++)
                 {
                 case 0:
@@ -426,7 +426,7 @@ void AMainHero::Attack()
             }
             else if (WeaponType == EWeaponType::EWT_BowArrow)
             {
-                AnimInstance->Montage_Play(BowArrowMontage);
+                AnimInstance->Montage_Play(BowArrowMontage, AttackSpeed);
                 switch (AttackIndex++)
                 {
                 case 0:
@@ -447,7 +447,7 @@ void AMainHero::Attack()
             }
             else if (WeaponType == EWeaponType::EWT_Spear)
             {
-                AnimInstance->Montage_Play(SpearMontage);
+                AnimInstance->Montage_Play(SpearMontage, AttackSpeed);
                 switch (AttackIndex++)
                 {
                 case 0:

@@ -24,7 +24,7 @@ void ATwoHandSword::Equip(AMainHero* MainHero)
             RighHandSocket->AttachActor(this, MainHero->GetMesh());
             MainHero->SetWeaponType(EWeaponType::EWT_TwoHandSword);
             SetWeaponDamage(THSDamge);
-            
+            MainHero->SetAttackSpeed(THS_AttackSpeed);
             if (EquipSound)
             {
                 UGameplayStatics::PlaySound2D(this, EquipSound);
