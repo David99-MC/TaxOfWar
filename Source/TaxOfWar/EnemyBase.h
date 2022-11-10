@@ -135,6 +135,9 @@ public:
 
 	void FocusTarget();
 
+	UFUNCTION(BlueprintImplementableEvent)
+	void ChangeState();
+
 public: // Visual and Sound Effects
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Effects | VFX")
 	class UParticleSystem* GetHitParticles;
@@ -146,7 +149,7 @@ public: // Visual and Sound Effects
 	USoundCue* SwingSound;
 
 protected: // for mobs, miniboss, witch
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Enemy Stats")
 	class UAttributeComponent* Attributes;
 
 	UPROPERTY(VisibleAnywhere)
@@ -186,6 +189,15 @@ private: // Ranged Combat
 	TSet<FVector> EnemySpawningLocations;
 
 private:
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat", meta = (AllowPrivateAccess = "true"))
+	float CloseCombatDamage;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat", meta = (AllowPrivateAccess = "true"))
+	float RangedCombatDamage;
+
+	float CombatDamage;
+	FORCEINLINE void SetCombatDamage(float Amount) {CombatDamage = Amount;}
 
 	int QuickHitsTaken;
 	float QuickHitsTimestamp;

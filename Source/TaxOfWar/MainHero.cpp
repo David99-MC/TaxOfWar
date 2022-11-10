@@ -336,7 +336,6 @@ float AMainHero::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent,
             }
         }
     }
-
 	return DamageAmount;
 }
 

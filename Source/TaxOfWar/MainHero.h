@@ -247,10 +247,10 @@ public:
 	void Fire();
 
 public: // Effects
-	UPROPERTY(EditAnywhere, Category = "Effects | VFX")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Effects | VFX")
 	class UParticleSystem* GetHitParticles;
 
-	UPROPERTY(EditAnywhere, Category = "Effects | SFX")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Effects | SFX")
 	class USoundCue* GetHitSound;
 
 private:

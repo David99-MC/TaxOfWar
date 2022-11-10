@@ -100,7 +100,4 @@ protected:
 public:
 	bool bIsAlive;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat")
-	float CombatDamage;
-
 };

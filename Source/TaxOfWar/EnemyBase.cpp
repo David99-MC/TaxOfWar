@@ -164,6 +164,8 @@ void AEnemyBase::StateChaseClose()
         if (UGameplayStatics::GetTimeSeconds(GetWorld()) >= (Attack_Timestamp + Attack_Cooldown))
         {
             Attack_Timestamp = UGameplayStatics::GetTimeSeconds(GetWorld());
+            Long_Attack_Timestamp = UGameplayStatics::GetTimeSeconds(GetWorld());
+            
             Attack();
             return;
         }
@@ -171,10 +173,12 @@ void AEnemyBase::StateChaseClose()
     else if (Distance > CloseAttackRange && Distance <= FarAttackRange) // Out of CloseAttackRange
     {
         bHasValidTarget = true;
-        
+        // Making a close or range attack will reset the the attack timer for both to prevent it from attacking twice
         if (UGameplayStatics::GetTimeSeconds(GetWorld()) >= (Long_Attack_Timestamp + Long_Attack_Cooldown) && AIController->LineOfSightTo(Target))
         {
             Long_Attack_Timestamp = UGameplayStatics::GetTimeSeconds(GetWorld());
+            Attack_Timestamp = UGameplayStatics::GetTimeSeconds(GetWorld());
+            
             RangedAttack(true);
             return;
         }
@@ -194,10 +198,10 @@ void AEnemyBase::Attack()
     if (!Attacking && bIsAlive && bHasValidTarget)
     {
         Super::Attack();
-
+        
         SetMovingBackwards(false);
         SetMovingForward(false);
-
+        SetCombatDamage(CloseCombatDamage);
         SetState(State::ATTACK);
         
         if (bShouldRotateTowardsTarget)
@@ -212,7 +216,7 @@ void AEnemyBase::Attack()
             UGameplayStatics::PlaySound2D(this, SwingSound);
 
         int RandomIndex = FMath::RandRange(0, AttackAnimations.Num() - 1);
-        PlayAnimMontage(AttackAnimations[RandomIndex]);
+        PlayAnimMontage(AttackAnimations[RandomIndex], .8f);
     }
 }
 
@@ -221,9 +225,9 @@ void AEnemyBase::RangedAttack(bool bShouldRotate)
     if (!Attacking && bIsAlive && bHasValidTarget)
     {
         Super::Attack();
-
         SetMovingBackwards(false);
         SetMovingForward(false);
+        SetCombatDamage(RangedCombatDamage);
         SetState(State::ATTACK);
 
         if (AIController)
@@ -238,7 +242,7 @@ void AEnemyBase::RangedAttack(bool bShouldRotate)
         }
         
         int RandomIndex = FMath::RandRange(0, RangedAttackAnimations.Num() - 1);
-        PlayAnimMontage(RangedAttackAnimations[RandomIndex], 0.8f);
+        PlayAnimMontage(RangedAttackAnimations[RandomIndex]);
     }
 }
 
@@ -339,7 +343,7 @@ float AEnemyBase::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent
             }
         }
     }
-
+    ChangeState();
 	return DamageAmount;
 }
 
