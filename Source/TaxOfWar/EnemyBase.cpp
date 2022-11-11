@@ -32,6 +32,9 @@ AEnemyBase::AEnemyBase()
     CombatCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("Combat Collision"));
     CombatCollision->SetupAttachment(GetMesh(), FName("EnemySocket"));
 
+    ShieldCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("Shield Collision"));
+    ShieldCollision->SetupAttachment(GetMesh(), FName("ShieldSocket"));
+
     AggroSphere = CreateDefaultSubobject<USphereComponent>(TEXT("Aggro Trigger"));
     AggroSphere->SetupAttachment(RootComponent);
     AggroSphere->SetCollisionResponseToChannel(ECollisionChannel::ECC_WorldDynamic, ECollisionResponse::ECR_Ignore);
@@ -69,6 +72,14 @@ void AEnemyBase::BeginPlay()
     CombatCollision->SetCollisionObjectType(ECollisionChannel::ECC_WorldDynamic);
     CombatCollision->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
     CombatCollision->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Overlap);
+
+    ShieldCollision->OnComponentBeginOverlap.AddDynamic(this, &AEnemyBase::ShieldCombatOnOverlapBegin);
+    ShieldCollision->OnComponentEndOverlap.AddDynamic(this, &AEnemyBase::ShieldCombatOnOverlapEnd);
+    // Setting up ShieldCollision info
+    ShieldCollision->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+    ShieldCollision->SetCollisionObjectType(ECollisionChannel::ECC_WorldDynamic);
+    ShieldCollision->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
+    ShieldCollision->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Overlap);
 
     AggroSphere->OnComponentBeginOverlap.AddDynamic(this, &AEnemyBase::AggroOnOverlapBegin);
     AggroSphere->OnComponentEndOverlap.AddDynamic(this, &AEnemyBase::AggroOnOverlapEnd);
@@ -386,6 +397,30 @@ void AEnemyBase::CombatOnOverlapEnd(UPrimitiveComponent* OverlappedComponent, AA
     
 }
 
+void AEnemyBase::ShieldCombatOnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+    // This is the CombatCollision for the Weapon
+    if (OtherActor)
+    {
+        AMainHero* MainHero = Cast<AMainHero>(OtherActor);
+        if (MainHero && MainHero->MovementStatus != EMovementStatus::EMS_Dead && bHasValidTarget)
+        {
+            if (MainHero->Rolling) // can't deal damage when the player is rolling
+                return;      
+            if (MainHero->GetHitParticles)
+                UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), MainHero->GetHitParticles, MainHero->GetActorLocation(), FRotator(0.f), false);
+            if (MainHero->GetHitSound)
+                UGameplayStatics::PlaySound2D(this, MainHero->GetHitSound, 0.6f);
+            UGameplayStatics::ApplyDamage(MainHero, CombatDamage, AIController, this, UDamageType::StaticClass());
+        }
+    }
+}	
+
+void AEnemyBase::ShieldCombatOnOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+    
+}
+
 void AEnemyBase::AggroOnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
     if (OtherActor)
@@ -427,6 +462,16 @@ void AEnemyBase::DeactivateCollision()
     CombatCollision->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 }
 
+void AEnemyBase::ActivateShieldCollision()
+{
+    ShieldCollision->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+}
+	
+void AEnemyBase::DeactivateShieldCollision()
+{
+    ShieldCollision->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+}
+
 void AEnemyBase::DeathEnd()
 {
     GetMesh()->bPauseAnims = true;
@@ -455,9 +500,4 @@ void AEnemyBase::Fire() // Called in AnimNotify
 	    // projectileClass is a UClass object which is a blueprint based on C++ Projectile class
     if (Projectile == nullptr) return;
 	Projectile->SetOwner(this); // this is to set the owner of the projectile to the pawn that spawned it.
-}
-
-void AEnemyBase::FireSpecial()
-{
-
 }

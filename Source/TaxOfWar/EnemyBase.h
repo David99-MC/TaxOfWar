@@ -45,6 +45,13 @@ public: // Combat
 	void CombatOnOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Combat")
+	UBoxComponent* ShieldCollision;
+	UFUNCTION()
+	void ShieldCombatOnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	UFUNCTION()	
+	void ShieldCombatOnOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Combat")
 	class USphereComponent* AggroSphere;
 	UFUNCTION()
 	void AggroOnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
@@ -56,6 +63,12 @@ public: // Combat
 
 	UFUNCTION(BlueprintCallable)
 	void DeactivateCollision();
+
+	UFUNCTION(BlueprintCallable)
+	void ActivateShieldCollision();
+
+	UFUNCTION(BlueprintCallable)
+	void DeactivateShieldCollision();
 
 	UFUNCTION(BlueprintCallable)
 	void DeathEnd();
@@ -177,9 +190,6 @@ private: // Ranged Combat
 
 	UFUNCTION(BlueprintCallable)
 	void Fire();
-
-	UFUNCTION(BlueprintCallable)
-	void FireSpecial();
 
 	// Spawning enemies
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat | Ranged", meta = (AllowPrivateAccess = "true"))
