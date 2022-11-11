@@ -227,7 +227,7 @@ void AEnemyBase::Attack()
             UGameplayStatics::PlaySound2D(this, SwingSound);
 
         int RandomIndex = FMath::RandRange(0, AttackAnimations.Num() - 1);
-        PlayAnimMontage(AttackAnimations[RandomIndex]);
+        PlayAnimMontage(AttackAnimations[RandomIndex], CloseAttackSpeedPercent);
     }
 }
 
@@ -253,7 +253,7 @@ void AEnemyBase::RangedAttack(bool bShouldRotate)
         }
         
         int RandomIndex = FMath::RandRange(0, RangedAttackAnimations.Num() - 1);
-        PlayAnimMontage(RangedAttackAnimations[RandomIndex], .8f);
+        PlayAnimMontage(RangedAttackAnimations[RandomIndex], RangedAttackSpeedPercent);
     }
 }
 
@@ -343,8 +343,9 @@ float AEnemyBase::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent
     }
     
     if (Attributes)
-    {
-        Attributes->ReceiveDamage(DamageAmount);
+    {   
+        float NewDamage = bHasEvolved ? (DamageAmount * ReducedDamagePercent) : DamageAmount; 
+        Attributes->ReceiveDamage(NewDamage);
         if (HealthBarWidget)
         {
             float RemainingHealth = Attributes->GetHealthPercent(); 
@@ -358,6 +359,8 @@ float AEnemyBase::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent
             {
                 bHasEvolved = true;
                 PlayAnimMontage(TauntingAnimMontage);
+                CloseAttackSpeedPercent = 1.25f;
+                RangedAttackSpeedPercent = 1.25f;
             }
         }
     }

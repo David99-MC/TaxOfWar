@@ -63,6 +63,7 @@ public: // Stamina involved section
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Player Stats")
 	float MaxStamina;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Player Stats")
 	float Stamina;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Player Stats")

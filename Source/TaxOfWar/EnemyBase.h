@@ -197,6 +197,9 @@ private: // Ranged Combat
 
 private:
 
+	UPROPERTY(EditAnywhere, Category = "Combat | Boss")
+	bool bIsBoss;
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat", meta = (AllowPrivateAccess = "true"))
 	float CloseCombatDamage;
 
@@ -213,7 +216,10 @@ private:
 	float HitThreshold;
 
 	UPROPERTY(EditAnywhere, Category = "Combat | Boss")
-	bool bIsBoss;
+	float CloseAttackSpeedPercent;
+
+	UPROPERTY(EditAnywhere, Category = "Combat | Boss")
+	float RangedAttackSpeedPercent;
 
 	UPROPERTY(EditAnywhere, Category = "Combat | Boss")
 	float HealthPercentThreshold;
@@ -227,6 +233,9 @@ private:
 	
 	bool bHasEvolved = false;
 	bool bEvolving = false;
+
+	UPROPERTY(EditAnywhere, Category = "Combat | Boss")
+	float ReducedDamagePercent;
 
 	UFUNCTION(BlueprintCallable)
 	void StartTaunt();

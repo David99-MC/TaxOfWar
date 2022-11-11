@@ -546,19 +546,19 @@ void AMainHero::Roll()
             switch (WeaponType)
             {
             case EWeaponType::EWT_TwoHandSword:
-                AnimInstance->Montage_Play(TwoHandSwordMontage);
+                AnimInstance->Montage_Play(TwoHandSwordMontage, 1.4f);
                 AnimInstance->Montage_JumpToSection(FName("RollTHS"), TwoHandSwordMontage);
                 break;
             case EWeaponType::EWT_Spear:
-                AnimInstance->Montage_Play(SpearMontage);
+                AnimInstance->Montage_Play(SpearMontage, 1.4f);
                 AnimInstance->Montage_JumpToSection(FName("RollSpear"), SpearMontage);
                 break;
             case EWeaponType::EWT_BowArrow:
-                AnimInstance->Montage_Play(BowArrowMontage);
+                AnimInstance->Montage_Play(BowArrowMontage, 1.4f);
                 AnimInstance->Montage_JumpToSection(FName("RollBow"), BowArrowMontage);
                 break;
             case EWeaponType::EWT_BareHand:
-                AnimInstance->Montage_Play(BareHandMontage);
+                AnimInstance->Montage_Play(BareHandMontage, 1.4f);
                 AnimInstance->Montage_JumpToSection(FName("RollNW"), BareHandMontage);
                 break;
             default:
