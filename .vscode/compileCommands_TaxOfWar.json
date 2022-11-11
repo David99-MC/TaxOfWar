@@ -50,16 +50,6 @@
 		"directory": "C:\\Epic Games\\Unreal Engine\\UE_5.0\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Epic Games\\Test\\TaxOfWar\\Source\\TaxOfWar\\EnemyBoss.cpp",
-		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\Epic Games\\Test\\TaxOfWar\\.vscode\\compileCommands_TaxOfWar\\TaxOfWar.214.rsp\"",
-		"directory": "C:\\Epic Games\\Unreal Engine\\UE_5.0\\Engine\\Source"
-	},
-	{
-		"file": "C:\\Epic Games\\Test\\TaxOfWar\\Source\\TaxOfWar\\EnemyBoss.h",
-		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\Epic Games\\Test\\TaxOfWar\\.vscode\\compileCommands_TaxOfWar\\TaxOfWar.214.rsp\"",
-		"directory": "C:\\Epic Games\\Unreal Engine\\UE_5.0\\Engine\\Source"
-	},
-	{
 		"file": "C:\\Epic Games\\Test\\TaxOfWar\\Source\\TaxOfWar\\HealthBar.cpp",
 		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\Epic Games\\Test\\TaxOfWar\\.vscode\\compileCommands_TaxOfWar\\TaxOfWar.214.rsp\"",
 		"directory": "C:\\Epic Games\\Unreal Engine\\UE_5.0\\Engine\\Source"

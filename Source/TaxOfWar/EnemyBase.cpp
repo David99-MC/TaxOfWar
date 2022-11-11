@@ -95,6 +95,8 @@ void AEnemyBase::BeginPlay()
 
     Attack_Timestamp = -Attack_Cooldown;
     Long_Attack_Timestamp = -Long_Attack_Cooldown;
+
+    HealthBarWidget->SetVisibility(false);
 }
 
 void AEnemyBase::Tick(float DeltaTime)
@@ -105,27 +107,25 @@ void AEnemyBase::Tick(float DeltaTime)
 
 void AEnemyBase::TickStateMachine()
 {
-    if (bIsAlive)
+    if (!bIsAlive) return;
+    DrawDebugSphere(GetWorld(), GetActorLocation(), CloseAttackRange, 20, FColor::Red);
+    DrawDebugSphere(GetWorld(), GetActorLocation(), FarAttackRange, 20, FColor::Blue);
+    switch (ActiveState)
     {
-        DrawDebugSphere(GetWorld(), GetActorLocation(), CloseAttackRange, 20, FColor::Red);
-        DrawDebugSphere(GetWorld(), GetActorLocation(), FarAttackRange, 20, FColor::Blue);
-        switch (ActiveState)
-        {
-            case State::IDLE:
-                StateIdle();
-                break;
-            case State::CHASE_CLOSE:
-                StateChaseClose();
-                break;
-            case State::ATTACK:
-                StateAttack();
-                break;
-            case State::STUMBLE:
-                StateStumble();
-                break;
-            default:
-                break;
-        }
+        case State::IDLE:
+            StateIdle();
+            break;
+        case State::CHASE_CLOSE:
+            StateChaseClose();
+            break;
+        case State::ATTACK:
+            StateAttack();
+            break;
+        case State::STUMBLE:
+            StateStumble();
+            break;
+        default:
+            break;
     }
 }
 
@@ -175,7 +175,7 @@ void AEnemyBase::StateChaseClose()
         if (UGameplayStatics::GetTimeSeconds(GetWorld()) >= (Attack_Timestamp + Attack_Cooldown))
         {
             Attack_Timestamp = UGameplayStatics::GetTimeSeconds(GetWorld());
-            Long_Attack_Timestamp = UGameplayStatics::GetTimeSeconds(GetWorld());
+            // Long_Attack_Timestamp = UGameplayStatics::GetTimeSeconds(GetWorld());
             
             Attack();
             return;
@@ -188,7 +188,7 @@ void AEnemyBase::StateChaseClose()
         if (UGameplayStatics::GetTimeSeconds(GetWorld()) >= (Long_Attack_Timestamp + Long_Attack_Cooldown) && AIController->LineOfSightTo(Target))
         {
             Long_Attack_Timestamp = UGameplayStatics::GetTimeSeconds(GetWorld());
-            Attack_Timestamp = UGameplayStatics::GetTimeSeconds(GetWorld());
+            // Attack_Timestamp = UGameplayStatics::GetTimeSeconds(GetWorld());
             
             RangedAttack(true);
             return;
@@ -227,7 +227,7 @@ void AEnemyBase::Attack()
             UGameplayStatics::PlaySound2D(this, SwingSound);
 
         int RandomIndex = FMath::RandRange(0, AttackAnimations.Num() - 1);
-        PlayAnimMontage(AttackAnimations[RandomIndex], .8f);
+        PlayAnimMontage(AttackAnimations[RandomIndex]);
     }
 }
 
@@ -253,7 +253,7 @@ void AEnemyBase::RangedAttack(bool bShouldRotate)
         }
         
         int RandomIndex = FMath::RandRange(0, RangedAttackAnimations.Num() - 1);
-        PlayAnimMontage(RangedAttackAnimations[RandomIndex]);
+        PlayAnimMontage(RangedAttackAnimations[RandomIndex], .8f);
     }
 }
 
@@ -311,8 +311,10 @@ float AEnemyBase::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent
 {
     if (DamageCauser == this)
         return 0.0f;
+    if (bEvolving)
+        return 0.0f;
 
-    if (QuickHitsTaken == 0 || GetWorld()->GetTimeSeconds() - QuickHitsTimestamp <= 1.f)
+    if (QuickHitsTaken == 0 || GetWorld()->GetTimeSeconds() - QuickHitsTimestamp <= 2.f)
     {
         QuickHitsTaken++;
         QuickHitsTimestamp = GetWorld()->GetTimeSeconds();
@@ -352,9 +354,13 @@ float AEnemyBase::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent
                 SetActorEnableCollision(false);
                 Die(DamageCauser);
             }
+            else if (!bHasEvolved && RemainingHealth <= HealthPercentThreshold && TauntingAnimMontage)
+            {
+                bHasEvolved = true;
+                PlayAnimMontage(TauntingAnimMontage);
+            }
         }
     }
-    ChangeState();
 	return DamageAmount;
 }
 
@@ -387,7 +393,11 @@ void AEnemyBase::CombatOnOverlapBegin(UPrimitiveComponent* OverlappedComponent, 
                 UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), MainHero->GetHitParticles, MainHero->GetActorLocation(), FRotator(0.f), false);
             if (MainHero->GetHitSound)
                 UGameplayStatics::PlaySound2D(this, MainHero->GetHitSound, 0.6f);
-            UGameplayStatics::ApplyDamage(MainHero, CombatDamage, AIController, this, UDamageType::StaticClass());
+
+            float NewDamage = CombatDamage;
+            if (bHasEvolved)
+                NewDamage = CombatDamage * DamageMultiplier;
+            UGameplayStatics::ApplyDamage(MainHero, NewDamage, AIController, this, UDamageType::StaticClass());
         }
     }
 }	
@@ -411,7 +421,11 @@ void AEnemyBase::ShieldCombatOnOverlapBegin(UPrimitiveComponent* OverlappedCompo
                 UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), MainHero->GetHitParticles, MainHero->GetActorLocation(), FRotator(0.f), false);
             if (MainHero->GetHitSound)
                 UGameplayStatics::PlaySound2D(this, MainHero->GetHitSound, 0.6f);
-            UGameplayStatics::ApplyDamage(MainHero, CombatDamage, AIController, this, UDamageType::StaticClass());
+
+            float NewDamage = CombatDamage;
+            if (bHasEvolved)
+                NewDamage = CombatDamage * DamageMultiplier;
+            UGameplayStatics::ApplyDamage(MainHero, NewDamage, AIController, this, UDamageType::StaticClass());
         }
     }
 }	
@@ -431,6 +445,7 @@ void AEnemyBase::AggroOnOverlapBegin(UPrimitiveComponent* OverlappedComponent, A
             RotateTowardsTarget = true;
             MainHero->SetCombatTarget(this);
             MainHero->UpdateCombatTarget(); // make sure to always target the closest enemy
+            HealthBarWidget->SetVisibility(true);
             SetState(State::CHASE_CLOSE);
         }
     }
@@ -447,6 +462,7 @@ void AEnemyBase::AggroOnOverlapEnd(UPrimitiveComponent* OverlappedComponent, AAc
             bHasValidTarget = false;
             MainHero->SetCombatTarget(nullptr);
             MainHero->UpdateCombatTarget();
+            HealthBarWidget->SetVisibility(false);
             SetState(State::IDLE);
         }
     }
@@ -500,4 +516,16 @@ void AEnemyBase::Fire() // Called in AnimNotify
 	    // projectileClass is a UClass object which is a blueprint based on C++ Projectile class
     if (Projectile == nullptr) return;
 	Projectile->SetOwner(this); // this is to set the owner of the projectile to the pawn that spawned it.
+}
+
+void AEnemyBase::StartTaunt()
+{
+    GetCharacterMovement()->MaxWalkSpeed = 0;
+    bEvolving = true;
+}
+
+void AEnemyBase::EndTaunt()
+{
+    GetCharacterMovement()->MaxWalkSpeed = 450.f;
+    bEvolving = false;
 }

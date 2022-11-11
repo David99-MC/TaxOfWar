@@ -73,19 +73,17 @@ AMainHero::AMainHero()
 	AttackIndex = 0;
 
 	NormalSpeed = 500.f;
-	CombatMovementSpeed = 250.f;
     RollSpeed = 650.f;
     StumblingSpeed = 40.f;
-    CombatDistance = 400.f;
 	GetCharacterMovement()->MaxWalkSpeed = NormalSpeed;
 
-    MaxStamina = 160.f;
-    Stamina = 160.f;
-	StaminaRegenRate = 50.f;
-    SprintingDrainRate = 20.f;
-    RollStamina = 40.f;
-	MinSprintStamina = 50.f;
-    SprintingSpeed = 800.f;
+    Stamina = MaxStamina;
+
+	// StaminaRegenRate = 50.f;
+    // SprintingDrainRate = 20.f;
+    // RollStamina = 40.f;
+	// MinSprintStamina = 50.f;
+    // SprintingSpeed = 800.f;
     MovementStatus = EMovementStatus::EMS_Normal;
     StaminaStatus = EStaminaStatus::ESS_Normal;
 
@@ -152,7 +150,7 @@ void AMainHero::Sprinting(float DeltaSecond)
         {
             SetMovementStatus(EMovementStatus::EMS_Sprinting);
             Stamina -= SprintDeltaStamina;
-            if (Stamina <= MinSprintStamina)
+            if (Stamina <= StaminaWarningThreshold)
                 SetStaminaStatus(EStaminaStatus::ESS_BelowMinimum);
         }
         else // shift key up
@@ -174,7 +172,7 @@ void AMainHero::Sprinting(float DeltaSecond)
         {
             SetMovementStatus(EMovementStatus::EMS_Normal);
             Stamina += RegenDeltaStamina; 
-            if (Stamina >= MinSprintStamina)  
+            if (Stamina >= StaminaWarningThreshold)  
                 SetStaminaStatus(EStaminaStatus::ESS_Normal);
         }
         break;
@@ -187,7 +185,7 @@ void AMainHero::Sprinting(float DeltaSecond)
 
     case EStaminaStatus::ESS_ExhaustedRecovery:
         Stamina += RegenDeltaStamina; 
-        if (Stamina >= MinSprintStamina)  
+        if (Stamina >= StaminaWarningThreshold)  
             SetStaminaStatus(EStaminaStatus::ESS_Normal);
         SetMovementStatus(EMovementStatus::EMS_Normal);
         break;
@@ -542,7 +540,6 @@ void AMainHero::Roll()
             RollRotation = GetActorRotation();
 
         SetActorRotation(RollRotation);
-
         // Play different AnimMontage based on weapon
         if (AnimInstance)
         {
@@ -582,7 +579,7 @@ void AMainHero::StartRoll()
 void AMainHero::EndRoll()
 {
     Rolling = false;
-    GetCharacterMovement()->MaxWalkSpeed = TargetLocked ? CombatMovementSpeed : NormalSpeed;
+    GetCharacterMovement()->MaxWalkSpeed = NormalSpeed;
 }
 
 void AMainHero::SetAttackDamaging(bool Damaging)
@@ -632,7 +629,7 @@ void AMainHero::SetMovementStatus(EMovementStatus Status)
 void AMainHero::TakeStamina(float Amount)
 {
     Stamina -= Amount;
-    if (Stamina <= MinSprintStamina)
+    if (Stamina <= StaminaWarningThreshold)
         SetStaminaStatus(EStaminaStatus::ESS_BelowMinimum);
     else if(Stamina <= 0)
         SetStaminaStatus(EStaminaStatus::ESS_ExhaustedRecovery);

@@ -63,14 +63,24 @@ public: // Stamina involved section
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Player Stats")
 	float MaxStamina;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player Stats")
 	float Stamina;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Player Stats")
 	float SprintingDrainRate;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Player Stats")
 	float StaminaRegenRate;
-	float MinSprintStamina;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Player Stats")
+	float StaminaWarningThreshold;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Player Stats")
 	float SprintingSpeed;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player Stats")
+	float RollStamina;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player Stats")
+	float AttackStamina;
 
 	bool bShiftKeyDown;
 
@@ -81,12 +91,6 @@ public: // Stamina involved section
 
 	UFUNCTION(BlueprintCallable)
 	void TakeStamina(float Amount);
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player Stats")
-	float RollStamina;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player Stats")
-	float AttackStamina;
 
 protected:
 	// Called when the game starts or when spawned
@@ -115,9 +119,6 @@ public:
 	float NormalSpeed;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Movement")
-	float CombatMovementSpeed;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Movement")
 	float RollSpeed;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Movement")
@@ -125,9 +126,6 @@ public:
 
 	bool bMoveForward;
 	bool bMoveRight;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat")
-	float CombatDistance;
 
 	void CycleTarget(bool Clockwise = true);
 

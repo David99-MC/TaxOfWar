@@ -25,7 +25,6 @@ class TAXOFWAR_API AEnemyBase : public ACombatant
 	GENERATED_BODY()
 
 public: // Combat
-
 	AEnemyBase();
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Combat")
@@ -91,8 +90,6 @@ public: // Combat
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent,
 	class AController* EventInstigator, AActor* DamageCauser) override;
 
-	class AAIController* AIController;
-
 	FTimerHandle AttackTimer;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat")
@@ -110,7 +107,6 @@ public: // Combat
 	float Long_Attack_Timestamp;
 
 protected:
-
 	virtual void BeginPlay() override;
 
 	virtual void TickStateMachine();
@@ -141,15 +137,23 @@ protected:
 	bool Interruptable;
 
 public:
-
 	virtual void Tick(float DeltaTime) override;
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	void FocusTarget();
 
-	UFUNCTION(BlueprintImplementableEvent)
-	void ChangeState();
+private:
+	/*
+	* Navigation
+	*/
+	class AAIController* AIController;
+
+	UPROPERTY(EditAnywhere, Category = "AI Navigation")
+	AActor* PatrolTarget;
+
+	UPROPERTY(EditAnywhere, Category = "AI Navigation")
+	TArray<AActor*> PatrolTargets;
 
 public: // Visual and Sound Effects
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Effects | VFX")
@@ -177,7 +181,7 @@ private: // Ranged Combat
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	USceneComponent* ProjectileSpawnLocation;
 
-	UPROPERTY(EditDefaultsOnly, category = "Combat")
+	UPROPERTY(EditDefaultsOnly, category = "Combat | Ranged")
 	TSubclassOf<class AProjectile> ProjectileClass; // this stores a UClass type object
 
 	void Teleport();
@@ -190,13 +194,6 @@ private: // Ranged Combat
 
 	UFUNCTION(BlueprintCallable)
 	void Fire();
-
-	// Spawning enemies
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat | Ranged", meta = (AllowPrivateAccess = "true"))
-	TSet<AEnemyBase*> Minions;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat | Ranged", meta = (AllowPrivateAccess = "true"))
-	TSet<FVector> EnemySpawningLocations;
 
 private:
 
@@ -215,7 +212,25 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	float HitThreshold;
 
-	UPROPERTY(EditAnywhere, Category = "Combat")
+	UPROPERTY(EditAnywhere, Category = "Combat | Boss")
 	bool bIsBoss;
 
+	UPROPERTY(EditAnywhere, Category = "Combat | Boss")
+	float HealthPercentThreshold;
+
+	UPROPERTY(EditAnywhere, Category = "Combat | Boss")
+	float DamageMultiplier;
+	FORCEINLINE void SetDamageMultiplier(float Amount) { DamageMultiplier = Amount; }
+
+	UPROPERTY(EditAnywhere, Category = "Combat | Boss")
+	UAnimMontage* TauntingAnimMontage;
+	
+	bool bHasEvolved = false;
+	bool bEvolving = false;
+
+	UFUNCTION(BlueprintCallable)
+	void StartTaunt();
+
+	UFUNCTION(BlueprintCallable)
+	void EndTaunt();
 };
