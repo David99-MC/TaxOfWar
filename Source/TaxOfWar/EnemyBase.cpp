@@ -49,9 +49,6 @@ AEnemyBase::AEnemyBase()
     MovingBackwards = false;
     Interruptable = true;
 
-    ActiveState = State::IDLE;
-
-    DeathDelay = 3.f;
     HitThreshold = 3;
     QuickHitsTaken = 0;
 
@@ -89,7 +86,7 @@ void AEnemyBase::BeginPlay()
     GetMesh()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Camera, ECollisionResponse::ECR_Ignore);
     GetCapsuleComponent()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Camera, ECollisionResponse::ECR_Ignore);
 
-    ActiveState = State::IDLE;
+    ActiveState = State::PATROL;
 
     HealthBarWidget->SetHealthPercent(Attributes->GetHealth() / Attributes->GetMaxHealth());
 
@@ -97,6 +94,8 @@ void AEnemyBase::BeginPlay()
     Long_Attack_Timestamp = -Long_Attack_Cooldown;
 
     HealthBarWidget->SetVisibility(false);
+    MoveToTarget(CurrentPatrolTarget);
+
 }
 
 void AEnemyBase::Tick(float DeltaTime)
@@ -114,6 +113,9 @@ void AEnemyBase::TickStateMachine()
     {
         case State::IDLE:
             StateIdle();
+            break;
+        case State::PATROL:
+            StatePatrol();
             break;
         case State::CHASE_CLOSE:
             StateChaseClose();
@@ -140,6 +142,17 @@ void AEnemyBase::StateIdle()
         AIController->StopMovement();
 }
 
+void AEnemyBase::StatePatrol()
+{
+    GetCharacterMovement()->MaxWalkSpeed = PatrolSpeed; 
+    if (InTargetRange(CurrentPatrolTarget, PatrolRadius))
+    {
+        float WaitTime = FMath::RandRange(3, 6);
+        CurrentPatrolTarget = ChooseNextPatrolTarget();
+        GetWorldTimerManager().SetTimer(PatrolTimerHandle, this, &AEnemyBase::PatrolTimerFinished, WaitTime);
+    }
+}
+
 void AEnemyBase::StateChaseClose()
 {
     AMainHero* Player = Cast<AMainHero>(Target);
@@ -149,7 +162,7 @@ void AEnemyBase::StateChaseClose()
         SetState(State::IDLE);
         return;
     }
-
+    GetCharacterMovement()->MaxWalkSpeed = bHasEvolved ? 450 : NormalSpeed;
     float Distance = FVector::Distance(Target->GetActorLocation(), GetActorLocation());
     if (Distance <= CloseAttackRange) // Get in range
     {
@@ -200,7 +213,7 @@ void AEnemyBase::StateChaseClose()
             GetWorldTimerManager().ClearTimer(TeleportTimer);
     }
 
-    if (AIController && !AIController->IsFollowingAPath())
+    if (AIController)
         AIController->MoveToActor(Target);       
 }
 
@@ -466,7 +479,8 @@ void AEnemyBase::AggroOnOverlapEnd(UPrimitiveComponent* OverlappedComponent, AAc
             MainHero->SetCombatTarget(nullptr);
             MainHero->UpdateCombatTarget();
             HealthBarWidget->SetVisibility(false);
-            SetState(State::IDLE);
+            SetState(State::PATROL);
+            MoveToTarget(CurrentPatrolTarget);
         }
     }
 }
@@ -531,4 +545,29 @@ void AEnemyBase::EndTaunt()
 {
     GetCharacterMovement()->MaxWalkSpeed = 450.f;
     bEvolving = false;
+}
+
+void AEnemyBase::PatrolTimerFinished()
+{
+    MoveToTarget(CurrentPatrolTarget);
+}
+
+AActor* AEnemyBase::ChooseNextPatrolTarget()
+{
+    NextPatrolIdx = (NextPatrolIdx == PatrolTargets.Num() - 1) ? 0 : ++NextPatrolIdx;
+    return PatrolTargets[NextPatrolIdx];
+}
+
+bool AEnemyBase::InTargetRange(AActor* Destination, float Radius)
+{
+    if (!Destination) return false;
+    float CurrentDistance = FVector::Dist(GetActorLocation(), Destination->GetActorLocation());
+    return CurrentDistance <= Radius;
+}
+
+void AEnemyBase::MoveToTarget(AActor* Destination)
+{
+    if (!AIController || !Destination) return;
+        
+    AIController->MoveToActor(Destination, 15.f);
 }

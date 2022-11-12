@@ -13,8 +13,8 @@ UENUM(BlueprintType)
 enum class State : uint8
 {
 	IDLE,					// Outside of combat
+	PATROL,					// Patrolling an area
 	CHASE_CLOSE,			// Combat, staying close to target
-	CHASE_FAR,				// Combat, doesn't care about range
 	ATTACK,					// In the process of attacking
 	STUMBLE,				// Stumbling from being damaged/interrupted
 };
@@ -115,6 +115,8 @@ protected:
 
 	virtual void StateIdle();
 
+	virtual void StatePatrol();
+
 	// state: actively trying to keep close and attack the target
 	virtual void StateChaseClose();
 
@@ -150,10 +152,32 @@ private:
 	class AAIController* AIController;
 
 	UPROPERTY(EditAnywhere, Category = "AI Navigation")
-	AActor* PatrolTarget;
+	AActor* CurrentPatrolTarget;
 
 	UPROPERTY(EditAnywhere, Category = "AI Navigation")
 	TArray<AActor*> PatrolTargets;
+
+	UPROPERTY(EditAnywhere, Category = "AI Navigation")
+	float PatrolRadius = 200.f;
+
+	int32 NextPatrolIdx = -1;
+
+	bool InTargetRange(AActor* Destination, float Radius);
+
+	FTimerHandle PatrolTimerHandle;
+
+	UFUNCTION()
+	void PatrolTimerFinished();
+
+	AActor* ChooseNextPatrolTarget();
+
+	void MoveToTarget(AActor* Destination);
+
+	UPROPERTY(EditAnywhere, Category = "AI Navigation")
+	float PatrolSpeed;
+
+	UPROPERTY(EditAnywhere, Category = "AI Navigation")
+	float NormalSpeed;
 
 public: // Visual and Sound Effects
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Effects | VFX")
